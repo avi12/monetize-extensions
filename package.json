@@ -1,4 +1,8 @@
 {
   "name": "monetize-extension",
-  "main": "index.js"
+  "main": "index.js",
+  "dependencies": {
+    "fflate": "latest",
+    "yargs": "latest"
+  }
 }
