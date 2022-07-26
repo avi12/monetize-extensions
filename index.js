@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const fflate = require('fflate');
 const yargs = require('yargs');
 const { argv } = yargs(pricess.argv[1]);
