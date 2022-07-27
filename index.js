@@ -22,8 +22,7 @@ const zipData = fflate.unzipSync(fs.readFileSync(zipName), {
   filter: (file) => file.name === 'manifest.json',
 });
 
-const manifestData = JSON.parse(zipData['manifest.json'].toString());
-console.log(manifestData);
+const manifestData = JSON.parse(new TextDecoder().decode(zipData['manifest.json']));
 const manifestInput = JSON.parse(
   fs.readFileSync(argv.manifestFilenameInput).toString()
 );
