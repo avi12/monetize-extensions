@@ -8,7 +8,9 @@ const path = require('path');
 function getStorage(pathname) {
   return fs
     .readdirSync(pathname)
-    .map((filename) => ({ [filename]: fs.readFileSync(filename) }))
+    .map((filename) => ({
+      [filename]: fs.readFileSync(path.join(pathname, filename)),
+    }))
     .flat();
 }
 
