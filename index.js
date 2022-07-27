@@ -49,7 +49,7 @@ for (const key in manifestInput) {
   }
 }
 
-zipData["manifest.json"] = new Uint16Array(Buffer.from(manifestData));
+zipData["manifest.json"] = Buffer.from(JSON.stringify(manifestData));
 
 const zip = fflate.zipSync({
   ...zipData,
