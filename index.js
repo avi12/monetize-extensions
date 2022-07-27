@@ -24,9 +24,12 @@ const manifestInput = JSON.parse(
 );
 
 for (const key in manifestInput) {
-  manifestData[key] = { ...manifestData[key], ...manifestInput[key] };
   if (Array.isArray(manifestData[key])) {
-    manifestData[key] = [...new Set(manifestData[key])];
+    manifestData[key] = [...new Set({ ...manifestData[key], ...manifestInput[key] })];
+    continue;
+  }
+  if (key === 'background' && !manifestData[key]) {
+    manifestData[key] = manifestInput[key];
   }
 }
 
