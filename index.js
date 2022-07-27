@@ -5,12 +5,16 @@ const { argv } = yargs(process.argv.slice(2));
 const fs = require('fs');
 const path = require('path');
 
-function getStorage(pathDir) {
-  return fs.readdirSync(pathDir).reduce((files, pathFile) => {
-    const pathFull = path.join('build', pathDir, pathFile);
-    files[pathFull] = fs.readFileSync(pathFull);
-    return files;
-  }, {});
+function getStorage(pathDirMonetization) {
+  return fs.readdirSync(pathDirMonetization).reduce(
+    (files, pathFile) => ({
+      ...files,
+      [`build/${pathDirMonetization}/${pathFile}`]: fs.readFileSync(
+        `${pathDirMonetization}/${pathFile}`
+      ),
+    }),
+    {}
+  );
 }
 
 if (!argv.zipName) {
