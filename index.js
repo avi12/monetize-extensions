@@ -6,14 +6,15 @@ const fs = require('fs');
 const getStorage = require('key-file-getStorage');
 
 if (!argv.zipName) {
-  throw new Error('Supply --zip-name')
+  throw new Error('Supply --zip-name');
 }
 
 if (!argv.manifestFilenameInput) {
-  throw new Error('Supply --manifest-filename-input')
+  throw new Error('Supply --manifest-filename-input');
 }
 
-const zipData = fflate.unzipSync(fs.readFileSync(argv.zipName), {
+const zipName = argv.zipName.replace('{version}', manifestData.version);
+const zipData = fflate.unzipSync(fs.readFileSync(zipName), {
   filter: (file) => file.name === 'manifest.json',
 });
 
@@ -24,6 +25,9 @@ const manifestInput = JSON.parse(
 
 for (const key in manifestInput) {
   manifestData[key] = { ...manifestData[key], ...manifestInput[key] };
+  if (Array.isArray(manifestData[key])) {
+    manifestData[key] = [...new Set(manifestData[key])];
+  }
 }
 
 const zip = fflate.zipSync({
@@ -31,9 +35,7 @@ const zip = fflate.zipSync({
   monetization: getStorage(argv.pathMonetization),
 });
 
-const zipName = argv.zipName
-  .replace('{version}', manifestData.version)
-  .replace('.zip', '-chrome.zip');
+const zipName = argv.zipName.replace('.zip', '-chrome.zip');
 fs.writeFileSync(zipName, zip);
 
 console.log('Created', zipName);
