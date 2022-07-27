@@ -29,7 +29,7 @@ const manifestInput = JSON.parse(
 
 for (const key in manifestInput) {
   if (Array.isArray(manifestData[key])) {
-    console.log(key);
+    console.log(manifestData[key]);
     manifestData[key] = [
       ...new Set({ ...manifestData[key], ...manifestInput[key] }),
     ];
