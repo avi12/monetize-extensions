@@ -4,7 +4,13 @@ const yargs = require('yargs');
 const { argv } = yargs(process.argv.slice(2));
 const fs = require('fs');
 const path = require('path');
-const { default: getStorage } = require('key-file-storage');
+
+function getStorage(pathname) {
+  return fs
+    .readdirSync(pathname)
+    .map((filename) => ({ [filename]: fs.readFileSync(filename) }))
+    .flat();
+}
 
 if (!argv.zipName) {
   throw new Error('Supply --zip-name');
@@ -49,15 +55,15 @@ for (const key in manifestInput) {
   }
 }
 
-zipData["manifest.json"] = Buffer.from(JSON.stringify(manifestData, null, 2));
+zipData['manifest.json'] = Buffer.from(JSON.stringify(manifestData, null, 2));
 
-const monetization = getStorage(argv.pathMonetization)
+const monetization = getStorage(argv.pathMonetization);
 
 console.log(monetization);
 
 const zip = fflate.zipSync({
   ...zipData,
-  monetization
+  monetization,
 });
 
 const zipNameOutput = zipName.replace('.zip', '__adapted_for_chrome.zip');
