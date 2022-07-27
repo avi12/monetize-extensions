@@ -29,13 +29,8 @@ const manifestInput = JSON.parse(
 
 for (const key in manifestInput) {
   if (Array.isArray(manifestData[key])) {
-    if (key === 'content_scripts') {
-      manifestData[key].push(manifestInput[key]);
-      continue;
-    }
-    console.log(key);
     manifestData[key] = [
-      ...new Set({ ...manifestData[key], ...manifestInput[key] }),
+      ...new Set([ ...manifestData[key], ...manifestInput[key] ]),
     ];
     continue;
   }
