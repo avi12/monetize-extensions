@@ -49,6 +49,8 @@ for (const key in manifestInput) {
   }
 }
 
+console.log(manifestData);
+
 const zip = fflate.zipSync({
   ...zipData,
   monetization: getStorage(argv.pathMonetization),
