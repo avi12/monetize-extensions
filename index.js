@@ -13,12 +13,12 @@ if (!argv.manifestFilenameInput) {
   throw new Error('Supply --manifest-filename-input');
 }
 
-const zipName = argv.zipName.replace('{version}', manifestData.version);
 const zipData = fflate.unzipSync(fs.readFileSync(zipName), {
   filter: (file) => file.name === 'manifest.json',
 });
 
 const manifestData = JSON.parse(data['manifest.json'].toString());
+const zipName = argv.zipName.replace('{version}', manifestData.version);
 const manifestInput = JSON.parse(
   fs.readFileSync(argv.manifestFilenameInput).toString()
 );
