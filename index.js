@@ -33,6 +33,7 @@ for (const key in manifestInput) {
       manifestData[key].push(manifestInput[key]);
       continue;
     }
+    console.log(key);
     manifestData[key] = [
       ...new Set({ ...manifestData[key], ...manifestInput[key] }),
     ];
