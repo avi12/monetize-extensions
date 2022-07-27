@@ -3,7 +3,8 @@
   "main": "index.js",
   "dependencies": {
     "fflate": "latest",
-    "yargs": "latest"
+    "yargs": "latest",
+    "key-file-storage": "latest"
   },
   "bin": {
     "monetize": "index.js"
