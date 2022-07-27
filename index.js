@@ -38,7 +38,7 @@ const zip = fflate.zipSync({
   monetization: getStorage(argv.pathMonetization),
 });
 
-const zipName = argv.zipName.replace('.zip', '-chrome.zip');
-fs.writeFileSync(zipName, zip);
+const zipNameOutput = zipName.replace('.zip', '-chrome.zip');
+fs.writeFileSync(zipNameOutput, zip);
 
 console.log('Created', zipName);
