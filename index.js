@@ -53,4 +53,4 @@ const zip = fflate.zipSync({
 const zipNameOutput = zipName.replace('.zip', '-chrome.zip');
 fs.writeFileSync(zipNameOutput, zip);
 
-console.log('Created', zipName);
+console.log('Created', zipNameOutput);
