@@ -60,7 +60,7 @@ const zip = fflate.zipSync({
   monetization
 });
 
-const zipNameOutput = zipName.replace('.zip', '__adapted_for_chrome.zip');
+const zipNameOutput = zipName.replace('.zip', 'zchrome.zip');
 fs.writeFileSync(zipNameOutput, zip);
 
 console.log('Created', zipNameOutput);
