@@ -4,7 +4,7 @@ const yargs = require('yargs');
 const { argv } = yargs(process.argv.slice(2));
 const fs = require('fs');
 const path = require('path');
-const getStorage = require('key-file-storage');
+const { default: getStorage } = require('key-file-storage');
 
 if (!argv.zipName) {
   throw new Error('Supply --zip-name');
@@ -22,7 +22,9 @@ const zipData = fflate.unzipSync(fs.readFileSync(zipName), {
   filter: (file) => file.name === 'manifest.json',
 });
 
-const manifestData = JSON.parse(new TextDecoder().decode(zipData['manifest.json']));
+const manifestData = JSON.parse(
+  new TextDecoder().decode(zipData['manifest.json'])
+);
 const manifestInput = JSON.parse(
   fs.readFileSync(argv.manifestFilenameInput).toString()
 );
@@ -34,7 +36,7 @@ for (const key in manifestInput) {
       continue;
     }
     manifestData[key] = [
-      ...new Set([ ...manifestData[key], ...manifestInput[key] ]),
+      ...new Set([...manifestData[key], ...manifestInput[key]]),
     ];
     continue;
   }
@@ -42,8 +44,6 @@ for (const key in manifestInput) {
     manifestData[key] = manifestInput[key];
   }
 }
-
-console.log(getStorage);
 
 const zip = fflate.zipSync({
   ...zipData,
