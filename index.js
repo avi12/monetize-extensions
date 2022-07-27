@@ -51,9 +51,13 @@ for (const key in manifestInput) {
 
 zipData["manifest.json"] = Buffer.from(JSON.stringify(manifestData, null, 2));
 
+const monetization = getStorage(argv.pathMonetization)
+
+console.log(monetization);
+
 const zip = fflate.zipSync({
   ...zipData,
-  monetization: getStorage(argv.pathMonetization),
+  monetization
 });
 
 const zipNameOutput = zipName.replace('.zip', '-chrome.zip');
