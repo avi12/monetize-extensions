@@ -18,9 +18,11 @@ const { version } = JSON.parse(
   fs.readFileSync(path.resolve(process.cwd(), 'package.json')).toString()
 );
 const zipName = argv.zipName.replace('{version}', version);
-console.log(zipName);
 const zipData = fflate.unzipSync(fs.readFileSync(zipName), {
-  filter: (file) => file.name === 'manifest.json',
+  filter: (file) => {
+    console.log(file)
+    return true;
+  },
 });
 
 const manifestData = JSON.parse(zipData['manifest.json'].toString());
