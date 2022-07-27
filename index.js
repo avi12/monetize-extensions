@@ -12,7 +12,7 @@ function getStorage(pathname) {
       const fullPath = path.join(pathname, filename);
       return { [fullPath]: fs.readFileSync(fullPath) };
     })
-    .flat();
+    .reduce((files, fileNew) => ({ ...files, ...fileNew }, {}));
 }
 
 if (!argv.zipName) {
