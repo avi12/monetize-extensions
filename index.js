@@ -3,6 +3,7 @@ const fflate = require('fflate');
 const yargs = require('yargs');
 const { argv } = yargs(process.argv.slice(2));
 const fs = require('fs');
+const path = require("path")
 const getStorage = require('key-file-storage');
 
 if (!argv.zipName) {
@@ -13,7 +14,7 @@ if (!argv.manifestFilenameInput) {
   throw new Error('Supply --manifest-filename-input');
 }
 
-const packageJson = JSON.parse(fs.readFileSync('package.json').toString());
+const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'package.json')).toString());
 const zipName = argv.zipName.replace('{version}', packageJson.version);
 const zipData = fflate.unzipSync(fs.readFileSync(zipName), {
   filter: (file) => file.name === 'manifest.json',
