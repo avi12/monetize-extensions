@@ -5,14 +5,14 @@ const { argv } = yargs(process.argv.slice(2));
 const fs = require('fs');
 const path = require('path');
 
-function getStorage(pathname) {
+function getStorage(pathDir) {
   return fs
-    .readdirSync(pathname)
-    .map((filename) => {
-      const fullPath = path.join(pathname, filename);
-      return { [fullPath]: fs.readFileSync(fullPath) };
-    })
-    .reduce((files, fileNew) => ({ ...files, ...fileNew }, {}));
+    .readdirSync(pathDir)
+    .reduce((files, pathFile) => {
+      const pathFull = path.join(pathDir, pathFile)
+      files[pathFull] = fs.readFileSync(pathFull);
+      return files;
+    }, {});
 }
 
 if (!argv.zipName) {
