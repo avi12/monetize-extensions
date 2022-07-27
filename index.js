@@ -13,19 +13,22 @@ if (!argv.manifestFilenameInput) {
   throw new Error('Supply --manifest-filename-input');
 }
 
+const packageJson = JSON.parse(fs.readFileSync('package.json').toString());
+const zipName = argv.zipName.replace('{version}', packageJson.version);
 const zipData = fflate.unzipSync(fs.readFileSync(zipName), {
   filter: (file) => file.name === 'manifest.json',
 });
 
-const manifestData = JSON.parse(data['manifest.json'].toString());
-const zipName = argv.zipName.replace('{version}', manifestData.version);
+const manifestData = JSON.parse(zipData['manifest.json'].toString());
 const manifestInput = JSON.parse(
   fs.readFileSync(argv.manifestFilenameInput).toString()
 );
 
 for (const key in manifestInput) {
   if (Array.isArray(manifestData[key])) {
-    manifestData[key] = [...new Set({ ...manifestData[key], ...manifestInput[key] })];
+    manifestData[key] = [
+      ...new Set({ ...manifestData[key], ...manifestInput[key] }),
+    ];
     continue;
   }
   if (key === 'background' && !manifestData[key]) {
