@@ -3,7 +3,7 @@ const fflate = require('fflate');
 const yargs = require('yargs');
 const { argv } = yargs(process.argv.slice(2));
 const fs = require('fs');
-const getStorage = require('key-file-getStorage');
+const getStorage = require('key-file-storage');
 
 if (!argv.zipName) {
   throw new Error('Supply --zip-name');
