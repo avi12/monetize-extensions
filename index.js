@@ -14,6 +14,12 @@ if (!argv.manifestFilenameInput) {
   throw new Error('Supply --manifest-filename-input');
 }
 
+if (!argv.pathMonetization) {
+  throw new Error(
+    'Supply --path-monetization to the monetization scripts directory'
+  );
+}
+
 const { version } = JSON.parse(
   fs.readFileSync(path.resolve(process.cwd(), 'package.json')).toString()
 );
