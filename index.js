@@ -6,13 +6,11 @@ const fs = require('fs');
 const path = require('path');
 
 function getStorage(pathDir) {
-  return fs
-    .readdirSync(pathDir)
-    .reduce((files, pathFile) => {
-      const pathFull = path.join(pathDir, pathFile)
-      files[pathFull] = fs.readFileSync(pathFull);
-      return files;
-    }, {});
+  return fs.readdirSync(pathDir).reduce((files, pathFile) => {
+    const pathFull = path.join('build', pathDir, pathFile);
+    files[pathFull] = fs.readFileSync(pathFull);
+    return files;
+  }, {});
 }
 
 if (!argv.zipName) {
