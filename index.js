@@ -5,6 +5,14 @@ const { argv } = yargs(process.argv.slice(2));
 const fs = require('fs');
 const getStorage = require('key-file-getStorage');
 
+if (!argv.zipName) {
+  throw new Error('Supply --zip-name')
+}
+
+if (!argv.manifestFilenameInput) {
+  throw new Error('Supply --manifest-filename-input')
+}
+
 const zipData = fflate.unzipSync(fs.readFileSync(argv.zipName), {
   filter: (file) => file.name === 'manifest.json',
 });
