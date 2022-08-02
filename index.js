@@ -9,9 +9,7 @@ function getStorage(pathDirMonetization) {
   return fs.readdirSync(pathDirMonetization).reduce(
     (files, pathFile) => ({
       ...files,
-      [`build/${pathDirMonetization}/${pathFile}`]: fs.readFileSync(
-        `${pathDirMonetization}/${pathFile}`
-      ),
+      [pathFile]: fs.readFileSync(`${pathDirMonetization}/${pathFile}`),
     }),
     {}
   );
@@ -62,11 +60,9 @@ for (const key in manifestInput) {
 
 zipData['manifest.json'] = Buffer.from(JSON.stringify(manifestData, null, 2));
 
-const monetization = getStorage(argv.pathMonetization);
-
 const zip = fflate.zipSync({
   ...zipData,
-  monetization,
+  build: getStorage(argv.pathMonetization),
 });
 
 const zipNameOutput = zipName.replace('.zip', '__adapted_for_chrome.zip');
