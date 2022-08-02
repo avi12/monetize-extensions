@@ -9,7 +9,7 @@ function getStorage(pathDirMonetization) {
   return fs.readdirSync(pathDirMonetization).reduce(
     (files, pathFile) => ({
       ...files,
-      [pathFile]: fs.readFileSync(`${pathDirMonetization}/${pathFile}`),
+      [`monetization/${pathFile}`]: fs.readFileSync(`${pathDirMonetization}/${pathFile}`),
     }),
     {}
   );
